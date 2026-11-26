@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ประวัติปัญญาประดิษฐ์ – แอนิเมชัน 3 นาที</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap">
+<style>
+:root{--p:#f3e6c8;--p2:#e8d5a8;--i:#3b2a1a;--r:#a8422c;--b:#2f5d6b;--g:#c9962b;--c:#fff8e6;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--p:#241c14;--p2:#3a2d1f;--i:#efe0bf;--r:#e07a5f;--b:#4f8a9b;--g:#e0b84f;--c:#fff8e6}}
+:root[data-theme="dark"]{--p:#241c14;--p2:#3a2d1f;--i:#efe0bf;--r:#e07a5f;--b:#4f8a9b;--g:#e0b84f;--c:#fff8e6}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--p2);color:var(--i);font-family:'Sarabun',system-ui,sans-serif;display:flex;flex-direction:column;align-items:center;padding:12px}
+#stage{position:relative;width:100%;max-width:960px;aspect-ratio:16/9;background:var(--p);border:4px double var(--i);border-radius:6px;overflow:hidden;
+background-image:radial-gradient(circle at 50% 40%,transparent 55%,rgba(90,60,20,.22))}
+#yr{position:absolute;left:4%;top:4%;font-size:clamp(20px,4.6vw,44px);font-weight:700;color:var(--r)}
+#ti{position:absolute;right:4%;top:5%;font-size:clamp(13px,2.4vw,24px);font-weight:700;text-align:right;max-width:55%}
+#art{position:absolute;left:0;right:0;top:14%;height:58%}
+#art svg{width:100%;height:100%;fill:var(--p2);stroke:var(--i);stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+#art text{fill:var(--i);stroke:none;font-family:inherit}
+.g{fill:var(--g)}.r{fill:var(--r)}.b{fill:var(--b)}.n{fill:none}
+#art .w{fill:var(--c)}
+#sub{position:absolute;left:3%;right:3%;bottom:6%;background:rgba(30,20,10,.82);color:#fff8e6;padding:.5em .8em;border-radius:6px;font-size:clamp(11px,1.9vw,20px);line-height:1.5;text-align:center}
+#bar{position:absolute;left:0;bottom:0;height:5px;background:var(--r);width:0}
+#start{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:var(--p);z-index:5;cursor:pointer;text-align:center;padding:10px}
+#start h1{margin:0;font-size:clamp(20px,4vw,40px)}
+#start span.pl{font-size:clamp(30px,6vw,60px);color:var(--r)}
+.a{animation:rise .9s both;animation-delay:var(--d,0s)}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.spin{animation:spin 8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.bl{animation:bl 1.2s steps(2) infinite}
+@keyframes bl{50%{opacity:.2}}
+#ctl{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:center;margin:12px 0;font-size:15px}
+button{font:inherit;background:var(--i);color:var(--p);border:0;border-radius:6px;padding:.45em .9em;cursor:pointer}
+#note{font-size:13px;opacity:.8;text-align:center;max-width:960px}
+details{width:100%;max-width:960px;margin-top:8px;background:var(--p);border:1px solid var(--i);border-radius:6px;padding:8px 14px}
+summary{cursor:pointer;font-weight:700}
+li{margin:.6em 0;line-height:1.55}
+</style>
+</head>
+<body>
+<div id="stage">
+ <div id="start"><h1>ปัญญาประดิษฐ์: จากตำนานสู่ พ.ศ. 2569</h1><span class="pl">▶</span><div>กดเพื่อเริ่มเล่น (ความยาว 3 นาที พร้อมเสียงบรรยายภาษาไทย)</div></div>
+ <div id="yr"></div><div id="ti"></div><div id="art"></div><div id="sub"></div><div id="bar"></div>
+</div>
+<div id="ctl">
+ <button id="pp">⏸ หยุด</button><button id="pv">⏮</button><button id="nx">⏭</button><button id="rs">↺ เริ่มใหม่</button>
+ <button id="sd">🔊 เสียง: เปิด</button><span id="tm">00:00 / 03:00</span>
+</div>
+<div id="note"></div>
+<details><summary>บทบรรยายเต็ม (สคริปต์เสียงภาษาไทย)</summary><ol id="sc"></ol></details>
+<script>
+const D=22.5,T=D*8;
+function net(){let s='',cols=[3,4,4,2],xs=[60,130,200,270],pts=cols.map((n,c)=>Array.from({length:n},(_,k)=>[xs[c],130+(k-(n-1)/2)*44]));
+for(let c=0;c<3;c++)pts[c].forEach(a=>pts[c+1].forEach(b=>s+=`<path class="n" d="M${a} L${b}" stroke-width="1.5"/>`));
+pts.flat().forEach((p,i)=>s+=`<circle class="a ${i%3?'b':'g'}" style="--d:${(i*.12).toFixed(2)}s" cx="${p[0]}" cy="${p[1]}" r="9"/>`);return s}
+function board(x,y,n,z){let s='';for(let i=0;i<n;i++)for(let j=0;j<n;j++)if((i+j)%2==0)s+=`<rect class="g" x="${x+i*z}" y="${y+j*z}" width="${z}" height="${z}"/>`;return s+`<rect class="n" x="${x}" y="${y}" width="${n*z}" height="${n*z}"/>`}
+const S=[
+{y:'ก่อน ค.ศ. 1950',t:'ความฝันโบราณ',n:'นานมาแล้ว มนุษย์ฝันถึงจักรกลที่คิดได้ ตำนานกรีกเล่าถึงยักษ์ทองสัมฤทธิ์ ทาลอส ต่อมาในปี ค.ศ. 1843 เอดา เลิฟเลซ มองเห็นว่าเครื่องคำนวณอาจทำได้มากกว่าตัวเลข นั่นคือเมล็ดพันธุ์แรกของปัญญาประดิษฐ์',
+s:`<circle class="a g" style="--d:.2s" cx="560" cy="60" r="32"/><g class="a" style="--d:.4s"><rect x="50" y="50" width="200" height="14"/><rect x="64" y="66" width="22" height="130"/><rect x="112" y="66" width="22" height="130"/><rect x="160" y="66" width="22" height="130"/><rect x="208" y="66" width="22" height="130"/><rect x="44" y="196" width="214" height="12"/></g>
+<g class="a g" style="--d:1.2s"><rect x="320" y="96" width="64" height="86" rx="10"/><circle cx="352" cy="72" r="22"/><rect x="326" y="182" width="20" height="40"/><rect x="358" y="182" width="20" height="40"/></g><circle cx="344" cy="70" r="3" class="r"/><circle cx="360" cy="70" r="3" class="r"/>
+<g class="spin" style="transform-origin:490px 160px"><circle class="n" cx="490" cy="160" r="32" stroke-width="13" stroke-dasharray="11 8"/><circle cx="490" cy="160" r="10"/></g>`},
+{y:'ค.ศ. 1950–1956',t:'กำเนิดปัญญาประดิษฐ์',n:'ปี 1950 อลัน ทัวริง ตั้งคำถามว่า เครื่องจักรคิดได้หรือไม่ และเสนอการทดสอบทัวริง จากนั้นในปี 1956 ที่วิทยาลัยดาร์ตมัธ จอห์น แม็กคาร์ธี ตั้งชื่อสาขานี้ว่า ปัญญาประดิษฐ์ ยุคแห่งความหวังจึงเริ่มต้นขึ้น',
+s:`<rect class="a b" x="50" y="20" width="290" height="170" rx="8"/><text class="a w" style="--d:.5s;fill:#fff8e6" x="195" y="85" text-anchor="middle" font-size="24">เครื่องจักรคิดได้ไหม?</text><text class="a" style="--d:1s;fill:#fff8e6" x="195" y="150" text-anchor="middle" font-size="42">1950</text>
+<g class="a" style="--d:1.4s"><circle cx="440" cy="90" r="22"/><path d="M405 190 Q440 110 475 190Z"/></g><g class="a" style="--d:1.8s"><rect class="g" x="520" y="80" width="80" height="62" rx="6"/><rect x="535" y="92" width="50" height="34" class="w"/><rect x="545" y="142" width="30" height="16"/></g>
+<text class="a bl" style="--d:2.2s" x="500" y="60" font-size="34" text-anchor="middle">?</text><text class="a" style="--d:3s" x="500" y="225" font-size="26" text-anchor="middle">1956 · “AI” ถือกำเนิด</text>`},
+{y:'ทศวรรษ 1960–1970',t:'ความตื่นเต้นและฤดูหนาวแรก',n:'ทศวรรษ 1960 โปรแกรมโต้ตอบชื่อ อีไลซา สร้างความตื่นตะลึง แต่ความคาดหวังสูงเกินกว่าพลังคอมพิวเตอร์ในยุคนั้น งบวิจัยถูกตัด เกิดเป็นฤดูหนาวของเอไอครั้งแรกในกลางทศวรรษ 1970',
+s:`<rect class="a" x="50" y="20" width="310" height="190" rx="8"/><rect class="a b" x="50" y="20" width="310" height="26" rx="8"/><text class="a" style="--d:.2s;fill:#fff8e6" x="62" y="39" font-size="16">ELIZA</text>
+<rect class="a g" style="--d:.8s" x="70" y="66" width="170" height="34" rx="10"/><rect class="a r" style="--d:1.6s" x="150" y="116" width="190" height="34" rx="10"/><rect class="a g" style="--d:2.4s" x="70" y="166" width="140" height="30" rx="10"/>
+<g class="spin" style="transform-origin:500px 120px"><path class="n" d="M500 50V190M440 85L560 155M440 155L560 85"/></g><g class="a" style="--d:2s"><rect class="r" x="420" y="205" width="22" height="20"/><rect class="r" x="450" y="212" width="22" height="13"/><rect class="r" x="480" y="219" width="22" height="6"/></g>`},
+{y:'ทศวรรษ 1980–1997',t:'ระบบผู้เชี่ยวชาญและดีปบลู',n:'ทศวรรษ 1980 ระบบผู้เชี่ยวชาญนำเอไอเข้าสู่ธุรกิจ ก่อนล้มลงเป็นฤดูหนาวครั้งที่สอง แล้วในปี 1997 ดีปบลูของไอบีเอ็ม เอาชนะแกรนด์มาสเตอร์หมากรุก แกรี คาสปารอฟ ได้ ทั่วโลกต้องหันมามองอีกครั้ง',
+s:`<g class="a">${board(60,30,5,38)}</g><g class="a" style="--d:1s"><circle class="r" cx="155" cy="112" r="12"/><rect class="r" x="144" y="124" width="22" height="30" rx="4"/><path class="n" d="M155 60V84M145 72H165"/></g>
+<g class="a" style="--d:1.8s"><rect class="b" x="380" y="40" width="90" height="150" rx="6"/><rect x="392" y="56" width="66" height="10" class="w"/><rect x="392" y="76" width="66" height="10" class="w"/><rect x="392" y="96" width="66" height="10" class="w"/></g><text class="a" style="--d:2.4s" x="425" y="215" font-size="22" text-anchor="middle">Deep Blue</text><text class="a" style="--d:3s" x="550" y="130" font-size="34">1997</text>`},
+{y:'ทศวรรษ 2000–2016',t:'การเรียนรู้เชิงลึกคืนชีพ',n:'ยุค 2000 ข้อมูลมหาศาลและการ์ดจอทรงพลัง ปลุกการเรียนรู้เชิงลึกให้ฟื้นคืนชีพ ปี 2012 อเล็กซ์เน็ตทำให้คอมพิวเตอร์มองภาพได้แม่นยำ และปี 2016 อัลฟาโก เอาชนะแชมป์โกะ อี เซดอล',
+s:`${net()}<g class="a" style="--d:2s"><rect x="390" y="30" width="170" height="170" class="g"/><path class="n" d="M390 87H560M390 143H560M447 30V200M503 30V200"/><circle class="w" cx="447" cy="87" r="14"/><circle class="b" cx="503" cy="143" r="14"/><circle class="w" cx="447" cy="143" r="14"/><circle class="b" cx="503" cy="87" r="14"/></g><text class="a" style="--d:3s" x="475" y="225" font-size="22" text-anchor="middle">AlphaGo 2016</text>`},
+{y:'ค.ศ. 2017–2022',t:'ยุคทรานส์ฟอร์เมอร์และแชตจีพีที',n:'ปี 2017 สถาปัตยกรรมทรานส์ฟอร์เมอร์ เปลี่ยนวิธีที่เครื่องจักรเข้าใจภาษา แล้วในเดือนพฤศจิกายน 2022 แชตจีพีทีเปิดตัว ผู้คนนับร้อยล้านได้คุยกับเอไอภายในไม่กี่เดือน โลกเปลี่ยนไปในพริบตา',
+s:`<g class="a">${[0,1,2,3,4,5].map(i=>`<rect class="g" x="${50+i*52}" y="150" width="42" height="26" rx="4"/>`).join('')}<path class="n r" d="M71 150Q150 70 227 150M123 150Q227 40 331 150M175 150Q250 90 279 150" stroke-width="3"/></g><text class="a" style="--d:.8s" x="180" y="205" font-size="20" text-anchor="middle">Transformer · 2017</text>
+<rect class="a b" style="--d:1.6s" x="400" y="30" width="190" height="52" rx="14"/><rect class="a w" style="--d:2.4s" x="370" y="100" width="220" height="86" rx="14"/><path class="n" style="stroke:var(--i)" d="M390 120H570M390 140H550M390 160H520"/><text class="a" style="--d:3s" x="480" y="215" font-size="22" text-anchor="middle">ChatGPT · พ.ย. 2022</text>`},
+{y:'ค.ศ. 2023–2025',t:'เอไอหลากรูปแบบ',n:'ปี 2023 ถึง 2025 เอไอเรียนรู้ที่จะเห็น ฟัง วาดภาพ สร้างวิดีโอ และเขียนโค้ด โมเดลโอเพนซอร์สเติบโตอย่างรวดเร็ว พร้อมกฎหมายกำกับดูแลฉบับแรก ๆ อย่างกฎหมายเอไอของสหภาพยุโรป',
+s:`<g class="a"><rect class="w" x="40" y="40" width="130" height="100" rx="6"/><circle class="g" cx="75" cy="70" r="12"/><path class="b" d="M50 130L95 80L125 115L145 95L160 130Z"/></g><g class="a" style="--d:.8s"><rect class="b" x="190" y="40" width="130" height="100" rx="6"/><path class="w" d="M235 65L285 90L235 115Z"/></g><g class="a" style="--d:1.6s"><rect x="340" y="40" width="130" height="100" rx="6"/><text x="405" y="102" font-size="34" text-anchor="middle">&lt;/&gt;</text></g><g class="a" style="--d:2.4s"><rect class="g" x="490" y="40" width="100" height="100" rx="6"/><path class="n" d="M510 90V90M525 70V110M540 55V125M555 75V105M570 85V95"/></g>
+<text class="a" style="--d:3s" x="320" y="190" font-size="24" text-anchor="middle">ภาพ · วิดีโอ · โค้ด · เสียง · กฎหมายเอไอ</text>`},
+{y:'พฤศจิกายน 2569 (2026)',t:'ปัจจุบัน: ยุคเอเจนต์',n:'จนถึงพฤศจิกายน 2569 เอไอเอเจนต์ทำงานแทนเราเบื้องหลัง โมเดลทรงพลังขึ้นแต่ต้นทุนถูกลง หลายประเทศออกกฎความโปร่งใส และเกิดคำถามเรื่องพลังงานของดาต้าเซ็นเตอร์ อนาคตของเอไอ ขึ้นอยู่กับทางเลือกของมนุษย์เรา',
+s:`<g class="a"><circle class="b" cx="170" cy="120" r="72"/><ellipse class="n" cx="170" cy="120" rx="30" ry="72"/><path class="n" d="M98 120H242M110 80H230M110 160H230"/></g><g class="spin" style="transform-origin:170px 120px"><ellipse class="n g" cx="170" cy="120" rx="100" ry="30" stroke-width="2"/><circle class="r" cx="270" cy="120" r="8"/></g>
+<g class="a" style="--d:1.2s">${[0,1,2].map(i=>`<rect x="340" y="${40+i*52}" width="110" height="42" rx="4"/><circle class="g bl" style="animation-delay:${i*.4}s" cx="360" cy="${61+i*52}" r="5"/>`).join('')}</g>
+<g class="a" style="--d:2s"><rect class="g" x="510" y="90" width="70" height="60" rx="10"/><rect class="w" x="522" y="104" width="46" height="18"/><circle class="r" cx="535" cy="113" r="4"/><circle class="r" cx="555" cy="113" r="4"/><rect x="525" y="150" width="40" height="30"/></g><text class="a" style="--d:3s" x="320" y="215" font-size="22" text-anchor="middle">เอเจนต์ · ดาต้าเซ็นเตอร์ · กฎความโปร่งใส</text>`}
+];
+const $=id=>document.getElementById(id),pad=n=>String(Math.floor(n)).padStart(2,'0'),fmt=s=>pad(s/60)+':'+pad(s%60);
+let t=0,playing=false,cur=-1,sound=true,last=0,voice=null;
+$('sc').innerHTML=S.map((s,i)=>`<li><b>${fmt(i*D)} – ${s.t}:</b> ${s.n}</li>`).join('');
+function getVoice(){try{voice=speechSynthesis.getVoices().find(v=>v.lang.toLowerCase().startsWith('th'))||null}catch(e){}}
+try{getVoice();speechSynthesis.onvoiceschanged=getVoice}catch(e){}
+function speak(i){try{speechSynthesis.cancel();if(!sound||!playing)return;const u=new SpeechSynthesisUtterance(S[i].n);u.lang='th-TH';if(voice)u.voice=voice;u.rate=1;speechSynthesis.speak(u)}catch(e){}}
+function show(i){cur=i;const s=S[i];$('yr').textContent=s.y;$('ti').textContent=s.t;$('sub').textContent=s.n;$('art').innerHTML=`<svg viewBox="0 0 640 240" preserveAspectRatio="xMidYMid meet">${s.s}</svg>`;speak(i)}
+function upd(){const i=Math.min(7,Math.floor(t/D));if(i!==cur)show(i);$('bar').style.width=(t/T*100)+'%';$('tm').textContent=fmt(t)+' / 03:00'}
+function tick(ts){if(!playing)return;t+=(ts-last)/1000;last=ts;if(t>=T){t=T;playing=false;$('pp').textContent='▶ เล่นอีกครั้ง';upd();return}upd();requestAnimationFrame(tick)}
+function play(){if(t>=T)t=0;playing=true;$('pp').textContent='⏸ หยุด';last=performance.now();cur=-1;upd();requestAnimationFrame(tick)}
+function pause(){playing=false;$('pp').textContent='▶ เล่นต่อ';try{speechSynthesis.cancel()}catch(e){}}
+function go(i){i=Math.max(0,Math.min(7,i));t=i*D;cur=-1;if(playing)upd();else{upd();try{speechSynthesis.cancel()}catch(e){}}}
+$('start').onclick=()=>{$('start').style.display='none';getVoice();if(!voice)$('note').textContent='อุปกรณ์นี้ไม่พบเสียงภาษาไทย จึงแสดงเป็นคำบรรยายใต้ภาพ (ติดตั้งเสียงไทยในระบบเพื่อฟังเสียงบรรยาย)';play()};
+$('pp').onclick=()=>playing?pause():play();
+$('pv').onclick=()=>go(Math.floor(t/D)-(t%D<2?1:0));
+$('nx').onclick=()=>go(Math.floor(t/D)+1);
+$('rs').onclick=()=>{t=0;cur=-1;play()};
+$('sd').onclick=()=>{sound=!sound;$('sd').textContent='🔊 เสียง: '+(sound?'เปิด':'ปิด');if(!sound){try{speechSynthesis.cancel()}catch(e){}}else if(playing)speak(cur)};
+show(0);
+</script>
+</body>
+</html>
